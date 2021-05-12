@@ -1,0 +1,101 @@
+spring:
+  #数据源1
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    url: jdbc:mariadb://192.168.10.69:3306/health?useAffectedRows=true
+    username: root
+    password: root
+redis:
+  # redis数据库索引(默认为0)，我们使用索引为3的数据库，避免和其他数据库冲突
+  database: 3
+  # redis服务器地址（默认为loaclhost）
+  host: 127.0.0.1
+  # redis端口（默认为6379）
+  post: 6379
+  # redis访问密码（默认为空）
+  password:
+  # redis连接超时时间（单位毫秒）
+  timeout: 0
+  # redis连接池配置
+  pool:
+    # 最大可用连接数（默认为8，负数表示无限）
+    max-active: 8
+    # 最大空闲连接数（默认为8，负数表示无限）
+    max-idle: 8
+    # 最小空闲连接数（默认为0，该值只有为正数才有用）
+    min-idle: 0
+    # 从连接池中获取连接最大等待时间（默认为-1，单位为毫秒，负数表示无限）
+    max-wait: -1
+#    druid:
+#      # 开启慢SQL统计（这里超过10毫秒则判定为慢SQL）
+#      filter:
+#        stat:
+#          enabled: true
+#          log-slow-sql: true
+#          low-sql-millis: 10
+#      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+#      filters: stat,wall,log4j2
+#      use-global-data-source-stat: true
+#      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+#      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+#      ##### WebStatFilter配置 #######
+#      web-stat-filter:
+#        #启用StatFilter
+#        enables: true
+#        #添加过滤规则
+#        url-pattern: /*
+#        #排除一些不必要的url
+#        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
+#        #开启session统计功能
+#        session-stat-enable: true
+#        #缺省sessionStatMaxCount是1000个
+#        session-stat-max-count: 1000
+#      ##### StatViewServlet配置 #######
+#      #启用内置的监控页面
+#      stat-view-servlet:
+#        enabled: true
+#        #内置监控页面的地址
+#        url-pattern: /druid/*
+#        #关闭 Reset All 功能
+#        reset-enable: false
+#        #设置登录用户名
+#        login-username: admin
+#        #设置登录密码
+#        login-password: 123
+#        #白名单（如果allow没有配置或者为空，则允许所有访问）
+#        allow:
+#        #黑名单（deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝）
+#        deny:
+#      aop-patterns:
+#        - com.yishi_app.dao.*
+
+server:
+  port: 8081
+
+constant_server:
+  photo_upload_path: /home/mvtech/
+  url_path: http://192.168.10.69/files/
+  chose_code: 0
+  server_log: /home/mvtech/health/script/logs
+  #APNs推送是否为生产环境，false为开发环境
+  apnsProduction: false
+
+
+mybatis:
+  #mybatis中mapper文件的路径
+  mapper-locations: classpath*:mappers/*.xml,classpath*:com/yishi_app/dao/**/*.xml
+  #起别名。可省略写mybatis的xml中的resultType的全路径
+  type-aliases-package: com.yishi_app.entity
+
+sentry:
+  enable: true
+  dsn: http://979730938bc042ab9acee06a2b3d78bb@47.103.86.8:9000/11
+  enable-tracing: true
+  traces-sample-rate: 0.3
+
+
+logging:
+  level:
+    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
+  config: classpath:logback-spring.xml
+
