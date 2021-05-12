@@ -3,100 +3,10 @@ spring:
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     url: jdbc:mariadb://47.103.86.8:3306/health?useAffectedRows=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
-
     username: apphealth
     password: apphealth
-    druid:
-      # 开启慢SQL统计（这里超过10毫秒则判定为慢SQL）
-      filter:
-        stat:
-          enabled: true
-          log-slow-sql: true
-          low-sql-millis: 10
-        # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
-        #这个地方不配置，在进行批量修改时会出现Error updating database. Cause: java.sql.SQLException: sql injection violation, multi-statement not allow 异常
-        wall:
-          config:
-            multi-statement-allow: true
-      #filters: stat,wall,log4j2
-      filters: config,stat,slf4j
-      use-global-data-source-stat: true
-      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
-      connect-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
-
-      ##### WebStatFilter配置 #######
-      web-stat-filter:
-        #启用StatFilter
-        enables: true
-        #添加过滤规则
-        url-pattern: /*
-        #排除一些不必要的url
-        exclusions: "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*"
-        #开启session统计功能
-        session-stat-enable: true
-        #缺省sessionStatMaxCount是1000个
-        session-stat-max-count: 1000
-      ##### StatViewServlet配置 #######
-      #启用内置的监控页面
-      stat-view-servlet:
-        enabled: true
-        #内置监控页面的地址
-        url-pattern: /druid/*
-        #关闭 Reset All 功能
-        reset-enable: false
-        #设置登录用户名
-        login-username: admin
-        #设置登录密码
-        login-password: 123456
-        #白名单（如果allow没有配置或者为空，则允许所有访问）
-        allow:
-        #黑名单（deny优先于allow，如果在deny列表中，就算在allow列表中，也会被拒绝）
-        deny:
-      aop-patterns:
-        - com.yishi_app.dao.*
-
-server:
-  port: 8087
-
-#配置常量参数通过@Value("${ss}")取值
-constant_server:
-  photo_upload_path: /home/health/health/
-  url_path: https://health.mvheartcare.net/files/
-  chose_code: 0
-  server_log: /home/health/health/script/logs
-  #APNs推送是否为生产环境，false为开发环境
-  apnsProduction: false
 
 
-mybatis:
-  #mybatis中mapper文件的路径
-  mapper-locations: classpath*:mappers/*.xml,classpath*:com/yishi_app/dao/**/*.xml
-  #起别名。可省略写mybatis的xml中的resultType的全路径
-  type-aliases-package: com.yishi_app.entity
 
-# knife开源的swagger ui配置
-knife4j:
-  # 是否是生产环境，如果是生产环境会默认关闭swagger
-  production: false
-  # 配置认证功能
-  basic:
-    # 是否开启认证
-    enable: false
-    # 用户名
-    username: admin
-    # 密码
-    password: 123456
-
-sentry:
-  enable: true
-  dsn: http://481f5552883a4ee1b9c1016bd168851b@47.103.86.8:9000/5
-  enable-tracing: true
-  traces-sample-rate: 0.3
-
-
-logging:
-  level:
-    com.netflix.discovery.shared.resolver.aws.ConfigClusterResolver: WARN
-  config: classpath:logback-spring.xml
 
 
