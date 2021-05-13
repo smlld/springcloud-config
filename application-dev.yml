@@ -1,8 +1,8 @@
 spring:
-  #数据源2
+  #数据源1
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
-    url: jdbc:mariadb://47.103.86.8:3306/health?useAffectedRows=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-8
+    url: jdbc:mariadb://47.103.86.8:3306/health?useAffectedRows=true&allowMultiQueries=true&useUnicode=true&characterEncoding=UTF-89
     username: apphealth
     password: apphealth
 
